@@ -55,9 +55,6 @@ jobs:
   package-chart:
 #  if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
     defaults:
       run:
         working-directory: charts
@@ -79,5 +76,5 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
         env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_TOKEN: "${{ secrets.PACKAGE_TOKEN }}"
 
