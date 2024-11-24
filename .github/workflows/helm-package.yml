@@ -11,6 +11,9 @@ on:
 jobs:
   lint-test:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
     defaults:
         run:
           working-directory: charts
