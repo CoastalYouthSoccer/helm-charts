@@ -5,7 +5,7 @@ This repo holds the Helm Chart for the Coastal Youth Soccer organization.
 
 ## Prerequisites
 
-- Kubernetes 1.16+
+- Kubernetes 1.22+
 - Helm 3.x.+
 
 ## Installing via Helm Repo
