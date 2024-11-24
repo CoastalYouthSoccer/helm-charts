@@ -11,9 +11,6 @@ on:
 jobs:
   lint-test:
     runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
     defaults:
         run:
           working-directory: charts
@@ -57,6 +54,9 @@ jobs:
 
   package-chart:
 #  if: github.ref == 'refs/heads/main'
+    permissions:
+      packages: write
+      contents: read
     runs-on: ubuntu-latest
     defaults:
       run:
