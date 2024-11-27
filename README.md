@@ -13,7 +13,7 @@ This repo holds the Helm Chart for the Coastal Youth Soccer organization.
 1. Add Repo
 
 ```console
-helm repo add coastalyouthsoccer https://coastalyouthsoccer.github.io/helm_charts
+helm repo add coastalyouthsoccer https://coastalyouthsoccer.github.io/helm-charts
 helm repo update
 ```
 
