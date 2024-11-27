@@ -3,6 +3,16 @@ entries:
   helm-chart:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2024-11-27T02:25:45.053726792Z"
+    description: A Helm chart for Kubernetes
+    digest: b9b71e15a8f976b4362eaa7af01d59b1a7fdbfe3bc0fb7021e61d60a469d5c21
+    name: helm-chart
+    type: application
+    urls:
+    - https://github.com/CoastalYouthSoccer/helm-charts/releases/download/helm-chart-0.9.0/helm-chart-0.9.0.tgz
+    version: 0.9.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-11-27T01:35:01.081514701Z"
     description: A Helm chart for Kubernetes
     digest: acfd006a73b1c7ab6bafc2239f5faaa462a8d7666d3c2d3e0ee32d34d598af36
@@ -11,4 +21,4 @@ entries:
     urls:
     - https://github.com/CoastalYouthSoccer/helm-charts/releases/download/helm-chart-0.8.0/helm-chart-0.8.0.tgz
     version: 0.8.0
-generated: "2024-11-27T01:35:01.081525481Z"
+generated: "2024-11-27T02:25:45.05373636Z"
