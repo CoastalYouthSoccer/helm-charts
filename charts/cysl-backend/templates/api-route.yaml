@@ -15,4 +15,4 @@ spec:
     - name: {{ include "helm-chart.fullname" . }}
       kind: Service
       port: {{ .Values.service.port }}
-{{- endif }}
+{{- end }}
