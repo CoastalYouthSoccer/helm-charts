@@ -3,6 +3,16 @@ entries:
   cysl-api:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2024-11-30T16:39:34.348895131Z"
+    description: A Helm chart for Kubernetes
+    digest: 2d1b6e01075cfddb4dac7183486b87981ab563ddef8f8a786cc3a93f17866e66
+    name: cysl-api
+    type: application
+    urls:
+    - https://github.com/CoastalYouthSoccer/helm-charts/releases/download/cysl-api-0.4.0/cysl-api-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-11-30T16:20:09.260745956Z"
     description: A Helm chart for Kubernetes
     digest: e9c293ef43f8e7a88cf2faa337d9e576cda5d688bc462a7ec9b2c3bad6bb4c22
@@ -83,4 +93,4 @@ entries:
     urls:
     - https://github.com/CoastalYouthSoccer/helm-charts/releases/download/helm-chart-0.8.0/helm-chart-0.8.0.tgz
     version: 0.8.0
-generated: "2024-11-30T16:20:09.260765613Z"
+generated: "2024-11-30T16:39:34.348923784Z"
