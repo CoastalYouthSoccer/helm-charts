@@ -91,14 +91,14 @@ autoscaling:
 
 # Additional volumes on the output Deployment definition.
 volumes:
- - name: envFile
+ - name: env-file
    secret:
      secretName: cysl-envfile
      optional: false
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: 
- - name: envFile
+ - name: env-file
    mountPath: "/opt/cysl/api"
    readOnly: true
 
