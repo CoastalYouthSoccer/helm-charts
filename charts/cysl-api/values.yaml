@@ -63,7 +63,7 @@ ingress:
   #      - chart-example.local
 
 gateway:
-  enabled: true
+  enabled: false
 
 resources:
   limits:
