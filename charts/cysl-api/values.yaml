@@ -112,3 +112,5 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+domainName: cysl.space
