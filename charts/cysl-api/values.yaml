@@ -113,6 +113,7 @@ tolerations: []
 
 affinity: {}
 
-domainName: cysl.space
-
-externalIP: 192.168.1.204
+loadBalancer:
+  domainName: cysl.space
+  externalIP: 192.168.1.204
+  clusterIssuer: lets-encrypt-staging
