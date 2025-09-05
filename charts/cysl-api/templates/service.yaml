@@ -1,15 +1,31 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: cysl-frontend
+  labels:
+    {{- include "helm-chart.labels" . | nindent 4 }}
+spec:
+  selector:
+    app: cysl-frontend
+  type: ClusterIP  # Internal service, accessed via Ingress
+  ports:
+    - name: http
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: {{ include "helm-chart.fullname" . }}
   labels:
     {{- include "helm-chart.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
   selector:
-    {{- include "helm-chart.selectorLabels" . | nindent 4 }}
+    app: {{ include "helm-chart.name" . }}
+  type: ClusterIP  # Internal service, accessed via Ingress
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8000
+      targetPort: 8000
