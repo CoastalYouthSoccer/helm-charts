@@ -23,7 +23,7 @@ spec:
   
   - host: "api.{{ .Values.loadBalancer.domainName }}"
     http:
-      paths:  # This was missing!
+      paths:
       - pathType: Prefix
         path: "/(.*)"
         backend:
@@ -40,7 +40,6 @@ spec:
   selector:
     name: cysl-ingress
   type: LoadBalancer
-  loadBalancerIP: {{ .Values.loadBalancer.externalIP }}
   ports:
     - name: http
       protocol: TCP
