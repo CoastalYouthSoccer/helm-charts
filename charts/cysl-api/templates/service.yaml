@@ -17,12 +17,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "helm-chart.fullname" . }}
+  name: cysl-api
   labels:
     {{- include "helm-chart.labels" . | nindent 4 }}
 spec:
   selector:
-    app: {{ include "helm-chart.name" . }}
+    app: {{ include "helm-chart.fullname" . }}
   type: ClusterIP  # Internal service, accessed via Ingress
   ports:
     - name: http

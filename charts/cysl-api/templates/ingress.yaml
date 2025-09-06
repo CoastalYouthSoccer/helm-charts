@@ -17,7 +17,7 @@ spec:
         path: "/api/"
         backend:
           service:
-            name: {{ include "helm-chart.fullname" . }}
+            name: cysl-api
             port:
               number: 8000
       # Frontend
