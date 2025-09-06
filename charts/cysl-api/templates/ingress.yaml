@@ -1,3 +1,4 @@
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -6,28 +7,24 @@ metadata:
     app: cysl-ingress
   annotations:
     kubernetes.io/ingress.class: nginx-public
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
     nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
 spec:
   rules:
-#  - host: {{ .Values.loadBalancer.domainName }}
   - http:
       paths:
+      # API paths
       - pathType: Prefix
-        path: "/(.*)"
-        backend:
-          service:
-            name: cysl-frontend
-            port:
-              number: 5000
-  
-#  - host: "api.{{ .Values.loadBalancer.domainName }}"
-  - http:
-      paths:
-      - pathType: Prefix
-        path: "/api(/|$)(.*)"
+        path: "/api/"
         backend:
           service:
             name: {{ include "helm-chart.fullname" . }}
             port:
               number: 8000
+      # Frontend
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: cysl-frontend
+            port:
+              number: 5000
