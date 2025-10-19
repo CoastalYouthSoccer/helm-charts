@@ -100,6 +100,9 @@ volumes:
    secret:
      secretName: cysl-envfile
      optional: false
+     items:
+     - key: envfile
+       path: .env  
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: 
