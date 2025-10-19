@@ -1,4 +1,12 @@
-
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: cysl-server-headers
+spec:
+  headers:
+    customRequestHeaders:
+      X-Forwarded-Proto: "https"
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -6,11 +14,14 @@ metadata:
   labels:
     app: cysl-ingress
   annotations:
-    kubernetes.io/ingress.class: nginx-public
-    nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    cert-manager.io/cluster-issuer: selfsigned-issuer
+    traefik.ingress.kubernetes.io/router.middlewares: cysl-cysl-server-headers@kubernetescrd
 spec:
   rules:
-  - http:
+  - host: api.cysl.space
+    http:
       paths:
       # API paths
       - pathType: Prefix
@@ -20,11 +31,7 @@ spec:
             name: cysl-api
             port:
               number: 8000
-      # Frontend
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: cysl-frontend
-            port:
-              number: 5000
+  tls:
+  - hosts:
+    - api.cysl.space
+    secretName: cysl-server-tls
