@@ -25,7 +25,7 @@ spec:
       paths:
       # API paths
       - pathType: Prefix
-        path: "/api/"
+        path: "/"
         backend:
           service:
             name: cysl-api
