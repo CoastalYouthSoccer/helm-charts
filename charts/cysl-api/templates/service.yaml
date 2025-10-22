@@ -1,29 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: cysl-frontend
-  labels:
-    {{- include "helm-chart.labels" . | nindent 4 }}
-spec:
-  selector:
-    app: cysl-frontend
-  type: ClusterIP  # Internal service, accessed via Ingress
-  ports:
-    - name: http
-      protocol: TCP
-      port: 5000
-      targetPort: 5000
----
-apiVersion: v1
-kind: Service
-metadata:
   name: cysl-api
   labels:
     {{- include "helm-chart.labels" . | nindent 4 }}
 spec:
   selector:
-    app: {{ include "helm-chart.fullname" . }}
-  type: ClusterIP  # Internal service, accessed via Ingress
+    {{- include "helm-chart.selectorLabels" . | nindent 6 }}
+  type: ClusterIP
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
   ports:
     - name: http
       protocol: TCP
