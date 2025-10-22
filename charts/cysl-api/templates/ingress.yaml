@@ -18,6 +18,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.tls: "true"
     cert-manager.io/cluster-issuer: selfsigned-issuer
     traefik.ingress.kubernetes.io/router.middlewares: cysl-cysl-server-headers@kubernetescrd
+    argocd.argoproj.io/sync-options: "Validate=false" 
 spec:
   rules:
   - host: api.cysl.space
