@@ -75,12 +75,14 @@ resources:
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
+  initialDelaySeconds: 30
   periodSeconds: 20
   failureThreshold: 10
   httpGet:
     path: /ping
     port: http
 readinessProbe:
+  initialDelaySeconds: 10
   periodSeconds: 20
   failureThreshold: 10
   httpGet:

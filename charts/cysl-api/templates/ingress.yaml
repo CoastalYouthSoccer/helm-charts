@@ -34,5 +34,5 @@ spec:
               number: 8000
   tls:
   - hosts:
-    - api.cysl.space
+    - cysl.example.com
     secretName: cysl-server-tls
