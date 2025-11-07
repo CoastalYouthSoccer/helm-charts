@@ -103,7 +103,7 @@ volumes:
     # Optional: Set specific file permissions
     defaultMode: 0400
     items:
-    - key: .env
+    - key: cysl-frontend-env
       path: .env 
 
 # Additional volumeMounts on the output Deployment definition.
