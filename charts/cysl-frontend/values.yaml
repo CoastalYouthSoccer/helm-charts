@@ -99,7 +99,7 @@ autoscaling:
 volumes:
 - name: env-secret
   secret:
-    secretName: vue-env-secret
+    secretName: cysl-front-end-envfile
     # Optional: Set specific file permissions
     defaultMode: 0400
     items:
