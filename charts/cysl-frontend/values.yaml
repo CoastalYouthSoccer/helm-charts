@@ -43,7 +43,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 8000
+  port: 80
 
 ingress:
   enabled: false
@@ -78,14 +78,14 @@ livenessProbe:
   periodSeconds: 20
   failureThreshold: 10
   httpGet:
-    path: /ping
+    path: /
     port: http
 readinessProbe:
   initialDelaySeconds: 10
   periodSeconds: 20
   failureThreshold: 10
   httpGet:
-    path: /ping
+    path: /
     port: http
 
 autoscaling:
