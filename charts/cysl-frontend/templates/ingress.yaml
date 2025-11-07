@@ -1,12 +1,3 @@
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: cysl-server-headers
-spec:
-  headers:
-    customRequestHeaders:
-      X-Forwarded-Proto: "https"
----
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
