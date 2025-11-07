@@ -10,9 +10,9 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: cysl-ingress
+  name: cysl-frontend-ingress
   labels:
-    app: cysl-ingress
+    app: cysl-frontend-ingress
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
@@ -22,7 +22,7 @@ metadata:
     argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
   rules:
-  - host: api.cysl.space
+  - host: cysl.space
     http:
       paths:
       # API paths
@@ -30,10 +30,10 @@ spec:
         path: "/"
         backend:
           service:
-            name: cysl-api
+            name: cysl-frontend
             port:
               number: 8000
   tls:
   - hosts:
-    - api.cysl.space
+    - cysl.space
     secretName: cysl-server-tls
