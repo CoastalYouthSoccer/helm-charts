@@ -1,6 +1,6 @@
 apiVersion: v2
-name: cysl-api
-description: A Helm chart for Kubernetes
+name: cysl-frontend
+description: A Helm chart for CYSL Frontend
 
 type: application
 
