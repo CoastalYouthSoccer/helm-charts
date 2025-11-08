@@ -13,7 +13,7 @@ metadata:
     argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
   rules:
-  - host: cysl.space
+  - host: {{ .Value.global.domainName }}
     http:
       paths:
       # API paths
@@ -26,5 +26,5 @@ spec:
               number: 8000
   tls:
   - hosts:
-    - cysl.space
+    - {{ .Value.global.domainName }}
     secretName: cysl-server-tls

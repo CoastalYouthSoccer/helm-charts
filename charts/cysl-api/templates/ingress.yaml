@@ -22,7 +22,7 @@ metadata:
     argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
   rules:
-  - host: api.cysl.space
+  - host: "api.{{ .Value.global.domainName }}"
     http:
       paths:
       # API paths

@@ -118,5 +118,7 @@ tolerations: []
 
 affinity: {}
 
-domainName: cysl.space
-clusterIssuer: lets-encrypt-staging
+global:
+  domainName: example.com
+  environment: production
+  clusterIssuer: lets-encrypt-staging
