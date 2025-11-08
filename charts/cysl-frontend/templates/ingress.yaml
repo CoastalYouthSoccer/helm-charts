@@ -23,7 +23,7 @@ spec:
           service:
             name: cysl-frontend
             port:
-              number: 8000
+              number: {{ .Values.service.port }}
   tls:
   - hosts:
     - {{ .Values.global.domainName }}

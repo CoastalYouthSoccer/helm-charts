@@ -32,7 +32,7 @@ spec:
           service:
             name: cysl-api
             port:
-              number: 8000
+              number: {{ .Values.service.port }}
   tls:
   - hosts:
     - "api.{{ .Values.global.domainName }}"
