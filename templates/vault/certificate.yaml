@@ -4,7 +4,11 @@ metadata:
   name: vault-transport
   namespace: vault
 spec:
-  insecureSkipVerify: true  # Skip verification of Vault's self-signed cert
+  serverName: vault.vault.svc.cluster.local  # SNI name
+  rootCAsSecrets:
+    - vault-ha-tls  # Reference to the secret containing vault.ca
+  certificatesSecrets:
+    - vault-ha-tls  # For mutual TLS if needed
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
