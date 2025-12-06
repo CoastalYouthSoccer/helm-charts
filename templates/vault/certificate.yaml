@@ -4,7 +4,7 @@ metadata:
   name: vault-tls
   namespace: vault
 spec:
-  secretName: vault-tls-temp
+  secretName: vault-ha-tls
   issuerRef:
     name: selfsigned-issuer
     kind: ClusterIssuer
