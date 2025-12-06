@@ -22,6 +22,9 @@ spec:
     - vault-standby.vault.svc.cluster.local
     - vault.example.com
     - "*.vault.svc.cluster.local"
+  ipAddresses:
+    - 127.0.0.1        # localhost - REQUIRED for vault operator commands
+    - "::1"            # IPv6 localhost
   privateKey:
     algorithm: RSA
     size: 2048
