@@ -27,4 +27,4 @@ spec:
   tls:
   - hosts:
     - {{ .Values.global.domainName }}
-    secretName: cysl-server-tls
+    secretName: cysl-frontend-tls
