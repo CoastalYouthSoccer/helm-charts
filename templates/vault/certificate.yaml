@@ -2,9 +2,10 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: ServersTransport
 metadata:
   name: vault-transport
-  namespace: vault
+  namespace: traefik
 spec:
   serverName: vault.vault.svc.cluster.local  # SNI name
+  insecureSkipVerify: true
   rootCAsSecrets:
     - vault-ha-tls  # Reference to the secret containing vault.ca
   certificatesSecrets:
