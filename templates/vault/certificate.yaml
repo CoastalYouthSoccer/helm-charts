@@ -5,10 +5,9 @@ metadata:
   namespace: vault
 spec:
   serverName: vault.vault.svc.cluster.local  # SNI name
-  certificatesSecrets:
-    - vault-client-tls
+  insecureSkipVerify: false
   rootCAsSecrets:
-    - vault-ca
+    - vault-ha-tls
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
