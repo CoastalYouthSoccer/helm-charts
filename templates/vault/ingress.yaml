@@ -7,3 +7,14 @@ spec:
     customRequestHeaders:
       X-Forwarded-Proto: "https"
       X-Forwarded-For: ""
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: vault-redirect-ui
+  namespace: vault
+spec:
+  redirectRegex:
+    regex: "^https://vault.example.com/$"
+    replacement: "https://vault.example.com/ui/"
+    permanent: false
