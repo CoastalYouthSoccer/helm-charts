@@ -13,18 +13,22 @@ spec:
       {{- include "helm-chart.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      {{- if .Values.vault.inject || .Values.podAnnotations}}
       annotations:
-        vault.hashicorp.com/agent-inject: "true"
-        vault.hashicorp.com/role: "cysl-role"
-        vault.hashicorp.com/agent-inject-secret-env: "kv/data/cysl/backend-env"
-        vault.hashicorp.com/agent-inject-file-env: ".env"
-        vault.hashicorp.com/secret-volume-path: "/opt/cysl/api"
+      {{- end }}
+      {{- if .Values.vault.inject }}
+        vault.hashicorp.com/agent-inject: {{ .Values.vault.inject }}
+        vault.hashicorp.com/role: {{ .Values.vault.role }}
+        vault.hashicorp.com/agent-inject-secret-env: {{ .Values.vault.secretName }}
+        vault.hashicorp.com/agent-inject-file-env: {{ .Values.vault.envFile }}
+        vault.hashicorp.com/secret-volume-path: {{ .Values.vault.filePath }}
         vault.hashicorp.com/agent-inject-template-env: |
-          {{`{{- with secret "kv/data/cysl/backend-env" -}}
+          {{`{{- with secret {{ .Values.vault.secretName }} -}}
           {{ range $k, $v := .Data.data }}
           {{ $k }}={{ $v }}
           {{ end }}
           {{- end -}}`}}
+      {{- end }}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}

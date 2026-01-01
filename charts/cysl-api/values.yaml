@@ -107,3 +107,10 @@ global:
   domainName: example.com
   environment: production
   clusterIssuer: lets-encrypt-staging
+
+vault:
+  inject: true
+  secretName: kv/data/cysl/backend-env
+  role: cysl-role
+  envFile: .env
+  filePath: /opt/cysl/api
