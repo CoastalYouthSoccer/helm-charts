@@ -97,22 +97,6 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
 
-# Additional volumes on the output Deployment definition.
-volumes:
- - name: env-file
-   secret:
-     secretName: cysl-envfile
-     optional: false
-     items:
-     - key: cysl-env
-       path: .env  
-
-# Additional volumeMounts on the output Deployment definition.
-volumeMounts: 
- - name: env-file
-   mountPath: "/opt/cysl/api"
-   readOnly: true
-
 nodeSelector: {}
 
 tolerations: []
