@@ -44,3 +44,26 @@ spec:
     - key encipherment
     - server auth
     - client auth
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vault-agent-injector-tls
+  namespace: vault
+spec:
+  secretName: vault-agent-injector-tls
+  duration: 8760h # 1 year
+  renewBefore: 720h # 30 days
+  issuerRef:
+    name: selfsigned-issuer
+    kind: Issuer
+  commonName: vault-agent-injector-svc.vault.svc
+  dnsNames:
+  - vault-agent-injector-svc
+  - vault-agent-injector-svc.vault
+  - vault-agent-injector-svc.vault.svc
+  - vault-agent-injector-svc.vault.svc.cluster.local
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
