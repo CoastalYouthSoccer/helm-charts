@@ -129,5 +129,4 @@ secretProvider:
   role: cysl-role
   objectName: backend-env
   secretKey: data
-  vaultAddress: http://vault.vault.svc:8200
-
+  vaultAddress: https://vault.vault.svc:8200
