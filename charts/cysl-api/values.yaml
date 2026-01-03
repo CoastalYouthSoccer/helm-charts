@@ -128,5 +128,4 @@ secretProvider:
   secretPath: kv/data/cysl/backend-env
   role: cysl-role
   objectName: backend-env
-  secretKey: data
   vaultAddress: https://vault.vault.svc:8200
