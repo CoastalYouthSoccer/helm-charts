@@ -8,7 +8,7 @@ spec:
   duration: 8760h
   renewBefore: 720h
   issuerRef:
-    name: selfsigned-issuer  # Use your ClusterIssuer
+    name: selfsigned-issuer
     kind: ClusterIssuer
   commonName: vault-agent-injector-svc.vault.svc
   dnsNames:

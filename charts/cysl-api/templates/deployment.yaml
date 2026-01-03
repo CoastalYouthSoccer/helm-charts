@@ -13,23 +13,8 @@ spec:
       {{- include "helm-chart.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- if .Values.vault.inject || .Values.podAnnotations}}
-      annotations:
-      {{- end }}
-      {{- if .Values.vault.inject }}
-        vault.hashicorp.com/agent-inject: {{ .Values.vault.inject }}
-        vault.hashicorp.com/role: {{ .Values.vault.role }}
-        vault.hashicorp.com/agent-inject-secret-env: {{ .Values.vault.secretName }}
-        vault.hashicorp.com/agent-inject-file-env: {{ .Values.vault.envFile }}
-        vault.hashicorp.com/secret-volume-path: {{ .Values.vault.filePath }}
-        vault.hashicorp.com/agent-inject-template-env: |
-          {{`{{- with secret {{ .Values.vault.secretName }} -}}
-          {{ range $k, $v := .Data.data }}
-          {{ $k }}={{ $v }}
-          {{ end }}
-          {{- end -}}`}}
-      {{- end }}
       {{- with .Values.podAnnotations }}
+      annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
