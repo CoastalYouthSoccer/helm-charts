@@ -110,6 +110,7 @@ volumes:
 volumeMounts: 
   - name: env-file
     mountPath: /opt/cysl/api/.env
+    subPath: backend-env  # The objectName from SecretProviderClass
     readOnly: true
 
 nodeSelector: {}
