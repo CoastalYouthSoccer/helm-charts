@@ -124,7 +124,7 @@ global:
   clusterIssuer: lets-encrypt-staging
 
 secretProvider:
-  inject: true
+  enabled: true
   secretPath: kv/data/cysl/backend-env
   role: cysl-role
   objectName: backend-env
