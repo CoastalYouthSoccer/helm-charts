@@ -105,7 +105,7 @@ spec:
               readOnly: true
 #            - name: vault-ca
 #              mountPath: /vault/tls
-              readOnly: true
+#              readOnly: true
             - name: env-file
               mountPath: /opt/cysl/api
       {{- end }}
