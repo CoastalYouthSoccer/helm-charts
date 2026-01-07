@@ -102,8 +102,8 @@ spec:
             - name: secrets-store-inline
               mountPath: /mnt/secrets-store
               readOnly: true
-            - name: vault-ca
-              mountPath: /vault/tls
+#            - name: vault-ca
+#              mountPath: /vault/tls
               readOnly: true
             - name: env-file
               mountPath: /opt/cysl/api
@@ -141,12 +141,12 @@ spec:
       volumes:
         {{- if .Values.secretProvider.enabled }}
         # Vault CA certificate
-        - name: vault-ca
-          configMap:
-            name: vault-ca
-            items:
-            - key: ca.crt
-              path: ca.crt
+#        - name: vault-ca
+#          configMap:
+#            name: vault-ca
+#            items:
+#            - key: ca.crt
+#              path: ca.crt
         
         # CSI volume - mounts to temporary location
         - name: secrets-store-inline
