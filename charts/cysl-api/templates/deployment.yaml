@@ -1,5 +1,4 @@
-apiVersion: apps/v1
-kind: Deployment
+nd: Deployment
 metadata:
   name: {{ include "helm-chart.fullname" . }}
   labels:
@@ -30,7 +29,7 @@ spec:
       serviceAccountName: {{ include "helm-chart.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      {{- if .Values.secretProvider.enabled -}}
+      {{- if .Values.secretProvider.enabled }}
       initContainers:
         - name: prepare-env-file
           image: busybox:latest
@@ -129,13 +128,41 @@ spec:
             {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
+            {{- if .Values.secretProvider.enabled }}
+            - name: env-file
+              mountPath: /opt/cysl/api
+              readOnly: true
+            {{- end }}
+            {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
+            {{- end }}
+      {{- if or .Values.secretProvider.enabled .Values.volumes }}
       volumes:
+        {{- if .Values.secretProvider.enabled }}
+        # Vault CA certificate
+        - name: vault-ca
+          configMap:
+            name: vault-ca
+            items:
+            - key: ca.crt
+              path: ca.crt
+        
+        # CSI volume - mounts to temporary location
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "vault-cysl-envfile"
+        
+        # EmptyDir for the final .env file
+        - name: env-file
+          emptyDir: {}
+        {{- end }}
+        {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
+        {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
