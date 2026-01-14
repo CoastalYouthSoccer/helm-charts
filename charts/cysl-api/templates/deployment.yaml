@@ -30,95 +30,16 @@ spec:
       serviceAccountName: {{ include "helm-chart.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      {{- if .Values.secretProvider.enabled }}
-      initContainers:
-        - name: prepare-env-file
-          image: busybox:latest
-          command:
-            - sh
-            - -c
-            - |
-              set -e
-              
-              echo "=== Preparing .env file from Vault secrets ==="
-              
-              # Wait for CSI to mount secrets
-              echo "Waiting for secrets to be available..."
-              max_wait=60
-              wait_time=0
-              
-              while [ $wait_time -lt $max_wait ]; do
-                if [ -d /mnt/secrets-store ] && [ "$(ls -A /mnt/secrets-store 2>/dev/null)" ]; then
-                  echo "✓ Secrets directory found and not empty"
-                  break
-                fi
-                wait_time=$((wait_time + 2))
-                echo "  Waiting... (${wait_time}s/${max_wait}s)"
-                sleep 2
-              done
-              
-              if [ ! -d /mnt/secrets-store ] || [ ! "$(ls -A /mnt/secrets-store)" ]; then
-                echo "✗ ERROR: Secrets not mounted after ${max_wait}s"
-                exit 1
-              fi
-              
-              # List available secrets
-              echo ""
-              echo "Available secrets:"
-              ls -la /mnt/secrets-store/
-              echo ""
-              
-              # Create .env file from secrets
-              echo "Creating .env file..."
-              > /opt/cysl/api/.env  # Create empty file first
-              
-              for secret_file in /mnt/secrets-store/*; do
-                if [ -f "$secret_file" ]; then
-                  key=$(basename "$secret_file")
-                  value=$(cat "$secret_file")
-                  echo "${key}=${value}" >> /opt/cysl/api/.env
-                  echo "  Added: ${key}"
-                fi
-              done
-              
-              # Verify file was created
-              if [ ! -f /opt/cysl/api/.env ]; then
-                echo "✗ ERROR: Failed to create .env file"
-                exit 1
-              fi
-              
-              # Set permissions
-              chmod 644 /opt/cysl/api/.env
-              
-              # Show result
-              echo ""
-              echo "✓ .env file created successfully:"
-              echo "=================================="
-              cat /opt/cysl/api/.env
-              echo "=================================="
-              echo ""
-              echo "File info:"
-              ls -lh /opt/cysl/api/.env
-          volumeMounts:
-            - name: secrets-store-inline
-              mountPath: /mnt/secrets-store
-              readOnly: true
-#            - name: vault-ca
-#              mountPath: /vault/tls
-#              readOnly: true
-            - name: env-file
-              mountPath: /opt/cysl/api
-      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["/bin/sh", "-c", "sleep 600"]
-          env:
-          - name: ENV_FILE
-            value: {{ .Values.envFile }}
+#          command: ["/bin/sh", "-c", "sleep 600"]
+          envFrom:
+            - secretRef:
+                name: {{ .Values.secretProvider.secretName }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
@@ -141,25 +62,13 @@ spec:
       {{- if or .Values.secretProvider.enabled .Values.volumes }}
       volumes:
         {{- if .Values.secretProvider.enabled }}
-        # Vault CA certificate
-#        - name: vault-ca
-#          configMap:
-#            name: vault-ca
-#            items:
-#            - key: ca.crt
-#              path: ca.crt
-        
         # CSI volume - mounts to temporary location
         - name: secrets-store-inline
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: "vault-cysl-envfile"
-        
-        # EmptyDir for the final .env file
-        - name: env-file
-          emptyDir: {}
+              secretProviderClass: {{ .Values.secretProvider.name | quote}}
         {{- end }}
         {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}

@@ -97,22 +97,6 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
 
-# Additional volumes on the output Deployment definition.
-volumes:
-  - name: env-file
-    csi:
-      driver: secrets-store.csi.k8s.io
-      readOnly: true
-      volumeAttributes:
-        secretProviderClass: "vault-cysl-envfile"
-
-# Additional volumeMounts on the output Deployment definition.
-volumeMounts: 
-  - name: env-file
-    mountPath: /opt/cysl/api/.env
-    subPath: backend-env  # The objectName from SecretProviderClass
-    readOnly: true
-
 nodeSelector: {}
 
 tolerations: []
@@ -126,7 +110,20 @@ global:
 
 secretProvider:
   enabled: true
+  name: vault-cysl-envfile
   secretPath: kv/data/cysl/backend-env
+  secretName: cysl-backend-secrets
   role: cysl-role
   objectName: backend-env
   vaultAddress: https://vault.vault.svc:8200
+  class: vault-cysl-envfile
+  secrets:
+    - DATABASE_URL
+    - API_KEY
+    - DEBUG
+    - LOG_LEVEL
+    - DATABASE_POOL_SIZE
+    - AUTH0_DOMAIN
+    - AUTH0_CLIENT_ID
+    - AUTH0_CLIENT_SECRET
+    
