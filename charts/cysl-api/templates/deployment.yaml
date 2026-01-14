@@ -52,8 +52,8 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             {{- if .Values.secretProvider.enabled }}
-            - name: env-file
-              mountPath: /opt/cysl/api
+            - name: secrets-store
+              mountPath: /mnt/secrets-store
               readOnly: true
             {{- end }}
             {{- with .Values.volumeMounts }}
@@ -63,7 +63,7 @@ spec:
       volumes:
         {{- if .Values.secretProvider.enabled }}
         # CSI volume - mounts to temporary location
-        - name: secrets-store-inline
+        - name: secrets-store
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
