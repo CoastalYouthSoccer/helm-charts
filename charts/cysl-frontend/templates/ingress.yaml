@@ -16,7 +16,7 @@ metadata:
   labels:
     app: cysl-ingress
   annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: {{ .Release.Namespace }}-cysl-server-headers@kubernetescrd,{{ .Release.Namespace }}-strip-api-prefix@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: {{ .Release.Namespace }}-cysl-server-headers@kubernetescrd,strip-api-prefix@kubernetescrd
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
     cert-manager.io/cluster-issuer: selfsigned-issuer
@@ -31,7 +31,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: cysl-backend
+            name: cysl-api
             port:
               number: {{ .Values.api.port }}
       - pathType: Prefix
