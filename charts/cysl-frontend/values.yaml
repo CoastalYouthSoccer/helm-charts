@@ -83,23 +83,6 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
 
-# Additional volumes on the output Deployment definition.
-volumes:
-- name: env-secret
-  secret:
-    secretName: cysl-front-end-envfile
-    # Optional: Set specific file permissions
-    defaultMode: 0400
-    items:
-    - key: cysl-frontend-env
-      path: .env 
-
-# Additional volumeMounts on the output Deployment definition.
-volumeMounts: 
-  - name: env-secret
-    mountPath: /app/secrets
-    readOnly: true
-
 nodeSelector: {}
 
 tolerations: []
