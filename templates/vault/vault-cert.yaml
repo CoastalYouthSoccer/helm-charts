@@ -1,0 +1,44 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: ServersTransport
+metadata:
+  name: vault-transport
+  namespace: vault
+spec:
+  serverName: vault.vault.svc.cluster.local  # SNI name
+  insecureSkipVerify: true
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vault-tls
+  namespace: vault
+spec:
+  secretName: vault-ha-tls
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+  commonName: vault.vault.svc.cluster.local
+  dnsNames:
+    - vault
+    - vault.vault
+    - vault.vault.svc
+    - vault.vault.svc.cluster.local
+    - vault-0.vault-internal
+    - vault-0.vault-internal.vault.svc.cluster.local
+    - vault-1.vault-internal
+    - vault-1.vault-internal.vault.svc.cluster.local
+    - vault-active.vault.svc.cluster.local
+    - vault-standby.vault.svc.cluster.local
+    - vault.example.com
+    - "*.vault.svc.cluster.local"
+  ipAddresses:
+    - 127.0.0.1        # localhost - REQUIRED for vault operator commands
+    - "::1"            # IPv6 localhost
+  privateKey:
+    algorithm: RSA
+    size: 2048
+  usages:
+    - digital signature
+    - key encipherment
+    - server auth
+    - client auth

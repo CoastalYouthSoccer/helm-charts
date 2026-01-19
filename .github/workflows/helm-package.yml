@@ -58,6 +58,8 @@ jobs:
     defaults:
       run:
         working-directory: charts
+    permissions:
+      contents: write
     needs: [lint-test]
     steps:
       - name: Checkout
@@ -76,4 +78,5 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
         env:
-          CR_TOKEN: "${{ secrets.PACKAGE_TOKEN }}"
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+

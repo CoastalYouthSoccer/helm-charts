@@ -1,0 +1,28 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vault-agent-injector-tls
+  namespace: vault
+spec:
+  secretName: vault-agent-injector-tls
+  duration: 8760h
+  renewBefore: 720h
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+  commonName: vault-agent-injector-svc.vault.svc
+  dnsNames:
+    - vault-agent-injector-svc
+    - vault-agent-injector-svc.vault
+    - vault-agent-injector-svc.vault.svc
+    - vault-agent-injector-svc.vault.svc.cluster.local
+  ipAddresses:
+    - 127.0.0.1
+    - "::1"
+  privateKey:
+    algorithm: RSA
+    size: 2048
+  usages:
+    - digital signature
+    - key encipherment
+    - server auth
